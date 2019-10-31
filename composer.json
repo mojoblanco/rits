@@ -1,0 +1,19 @@
+{
+    "name": "mojoblanco/rits-php",
+    "require": {
+        "guzzlehttp/guzzle": "^6.3@dev"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "John Olawale",
+            "email": "mojoblanco@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Mojoblanco\\RITS\\": "src/"
+        }
+    }
+}
