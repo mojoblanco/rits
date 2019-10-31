@@ -6,7 +6,6 @@ use Mojoblanco\RITS\Helpers\ApiHelper;
 
 class RITSService
 {
-
     private $credentials;
 
     public function __construct($credentials)

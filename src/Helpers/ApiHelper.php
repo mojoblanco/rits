@@ -10,14 +10,6 @@ class ApiHelper {
     {
         $hashString = $credentials->apiKey . $requestId . $credentials->apiToken;
         $apiHash = hash('sha512', $hashString);
-//        $headers = array(
-//            'Content-Type: application/json',
-//            'API_KEY:' . $credentials->apiKey,
-//            'REQUEST_ID:' . $requestId,
-//            'REQUEST_TS:' . self::getTimeStamp(), 
-//            'API_DETAILS_HASH:' . $apiHash,
-//            'MERCHANT_ID:' . $credentials->merchantId
-//        );
         
         $headers = [
             'Content-Type' => 'application/json',

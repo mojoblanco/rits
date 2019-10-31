@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Mojoblanco\RITS\Models;
 
 use Mojoblanco\RITS\Helpers\Encryptor;
