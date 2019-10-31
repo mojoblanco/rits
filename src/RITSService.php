@@ -12,11 +12,20 @@ class RITSService
     {
         $this->credentials = $credentials;
     }
-
-
-    function singlePayment($requestId, $payload)
+    
+    public function getActiveBanks($requestId)
     {
-        $headers = ApiHelper::getHeader($this->credentials, $requestId);
+        $headers = ApiHelper::getHeaders($this->credentials, $requestId);
+        $url = $this->credentials->baseUrl . 'fi/banks';
+        
+        $result = ApiHelper::makeRequest('POST', $url, $headers);
+        
+        return $result;
+    }
+
+    public function makeSinglePayment($requestId, $payload)
+    {
+        $headers = ApiHelper::getHeaders($this->credentials, $requestId);
         $url = $this->credentials->baseUrl . 'merc/payment/singlePayment.json';
         
         $data = [
