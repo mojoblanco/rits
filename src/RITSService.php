@@ -13,19 +13,34 @@ class RITSService
         $this->credentials = $credentials;
     }
     
-    public function getActiveBanks($requestId)
+    public function getActiveBanks()
     {
-        $headers = ApiHelper::getHeaders($this->credentials, $requestId);
+        $headers = ApiHelper::getHeaders($this->credentials);
         $url = $this->credentials->baseUrl . 'fi/banks';
         
         $result = ApiHelper::makeRequest('POST', $url, $headers);
         
         return $result;
     }
+    
+    public function accountEnquiry($payload)
+    {
+        $headers = ApiHelper::getHeaders($this->credentials);
+        $url = $this->credentials->baseUrl . 'merc/fi/account/lookup';
+        
+        $data = [
+            'accountNo' => $payload->getAccountNo(),
+            'bankCode' => $payload->getBankCode()
+        ];
+        
+        $result = ApiHelper::makeRequest('POST', $url, $headers, $data);
+        
+        return $result;
+    }
 
     public function makeSinglePayment($requestId, $payload)
     {
-        $headers = ApiHelper::getHeaders($this->credentials, $requestId);
+        $headers = ApiHelper::getHeaders($this->credentials);
         $url = $this->credentials->baseUrl . 'merc/payment/singlePayment.json';
         
         $data = [

@@ -6,8 +6,9 @@ use GuzzleHttp\Client;
 
 class ApiHelper {
     
-    public static function getHeaders($credentials, $requestId)
+    public static function getHeaders($credentials)
     {
+        $requestId = round(microtime(true) * 1000);
         $hashString = $credentials->apiKey . $requestId . $credentials->apiToken;
         $apiHash = hash('sha512', $hashString);
         
