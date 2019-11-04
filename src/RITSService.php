@@ -30,7 +30,7 @@ class RITSService
         
         $data = [
             'accountNo' => $payload->getAccountNo(),
-            'bankCode' => $payload->getBankCode()
+            'bankCode' => $payload->encryptedBankCode()
         ];
         
         $result = ApiHelper::makeRequest('POST', $url, $headers, $data);
@@ -44,12 +44,12 @@ class RITSService
         $url = $this->credentials->baseUrl . 'merc/payment/singlePayment.json';
         
         $data = [
-            'amount' => $payload->getAmount(),
+            'amount' => $payload->encryptedAmount(),
             'beneficiaryEmail' => $payload->getBeneficiaryEmail(),
             'creditAccount' => $payload->getCreditAccount(),
-            'debitAccount' => $payload->getDebitAccount(),
+            'debitAccount' => $payload->encryptedDebitAccount(),
             'fromBank' => $payload->getFromBank(),
-            'narration' => $payload->getNarration(),
+            'narration' => $payload->encryptedNarration(),
             'toBank' => $payload->getToBank(),
             'transRef' => $payload->getTransRef()
         ];
@@ -58,5 +58,20 @@ class RITSService
         
         return $result;
     }
+    
+    public function makeBulkPayment($payload)
+    {
+        $headers = ApiHelper::getHeaders($this->credentials);
+        $url = $this->credentials->baseUrl . 'merc/bulk/payment/send';
+        
+        $data = [
+            'bulkPaymentInfo' => $payload->getEncryptedData(),
+            'paymentDetails' => $payload->getEncryptedBeneficiaries(),
 
+        ];
+        
+        $result = ApiHelper::makeRequest('POST', $url, $headers, $data);
+        
+        return $result;
+    }
 }
