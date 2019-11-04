@@ -2,6 +2,7 @@
 
 namespace Mojoblanco\RITS;
 
+use Mojoblanco\RITS\Constants\Urls;
 use Mojoblanco\RITS\Helpers\ApiHelper;
 
 class RITSService
@@ -16,7 +17,7 @@ class RITSService
     public function getActiveBanks()
     {
         $headers = ApiHelper::getHeaders($this->credentials);
-        $url = $this->credentials->baseUrl . 'fi/banks';
+        $url = $this->credentials->baseUrl . Urls::$activeBanks;
         
         $result = ApiHelper::makeRequest('POST', $url, $headers);
         
@@ -26,7 +27,7 @@ class RITSService
     public function accountEnquiry($payload)
     {
         $headers = ApiHelper::getHeaders($this->credentials);
-        $url = $this->credentials->baseUrl . 'merc/fi/account/lookup';
+        $url = $this->credentials->baseUrl . Urls::$accountInquiry;
         
         $data = [
             'accountNo' => $payload->getAccountNo(),
@@ -38,10 +39,10 @@ class RITSService
         return $result;
     }
 
-    public function makeSinglePayment($requestId, $payload)
+    public function makeSinglePayment($payload)
     {
         $headers = ApiHelper::getHeaders($this->credentials);
-        $url = $this->credentials->baseUrl . 'merc/payment/singlePayment.json';
+        $url = $this->credentials->baseUrl . Urls::$singlePayment;
         
         $data = [
             'amount' => $payload->encryptedAmount(),
@@ -62,7 +63,7 @@ class RITSService
     public function makeBulkPayment($payload)
     {
         $headers = ApiHelper::getHeaders($this->credentials);
-        $url = $this->credentials->baseUrl . 'merc/bulk/payment/send';
+        $url = $this->credentials->baseUrl . Urls::$bulkPayment;
         
         $data = [
             'bulkPaymentInfo' => $payload->getEncryptedData(),
