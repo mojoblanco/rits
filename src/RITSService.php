@@ -33,13 +33,26 @@ class RITSService
         $url = $this->baseUrl . Urls::$accountInquiry;
         
         $data = [
-            'accountNo' => $payload->getAccountNo(),
+            'accountNo' => $payload->encryptedAccountNo(),
             'bankCode' => $payload->encryptedBankCode()
         ];
         
         $result = ApiHelper::makeRequest('POST', $url, $headers, $data);
         
         return $result;
+    }
+    
+    public function addAccount($payload)
+    {
+        $headers = ApiHelper::getHeaders($this->credentials);
+        $url = $this->baseUrl . Urls::$addAccount;
+        
+        $data = [
+            'accountNo' => $payload->encryptedAccountNo(),
+            'bankCode' => $payload->encryptedBankCode()
+        ];
+        
+        return ApiHelper::makeRequest('POST', $url, $headers, $data);;
     }
     
     public function getSinglePaymentStatus($payload)

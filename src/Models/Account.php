@@ -4,7 +4,7 @@ namespace Mojoblanco\RITS\Models;
 
 use Mojoblanco\RITS\Helpers\Encryptor;
 
-class AccountEnquiry {
+class Account {
     
     public $accountNo;
     public $bankCode; 
@@ -17,11 +17,11 @@ class AccountEnquiry {
         $this->key = $key;
     }
 
-    public function getAccountNo() {
+    public function encryptedAccountNo() {
         return Encryptor::encrypt($this->accountNo, $this->iv, $this->key);
     }
     
-    public function getBankCode() {
+    public function encryptedBankCode() {
         return Encryptor::encrypt($this->bankCode, $this->iv, $this->key);
     }
 }
