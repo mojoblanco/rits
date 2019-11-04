@@ -7,17 +7,20 @@ use Mojoblanco\RITS\Helpers\ApiHelper;
 
 class RITSService
 {
+    private $baseUrl;
     private $credentials;
 
     public function __construct($credentials)
     {
         $this->credentials = $credentials;
+        
+        $this->baseUrl = Urls::getBaseUrl($credentials->env);
     }
     
     public function getActiveBanks()
     {
         $headers = ApiHelper::getHeaders($this->credentials);
-        $url = $this->credentials->baseUrl . Urls::$activeBanks;
+        $url = $this->baseUrl . Urls::$activeBanks;
         
         $result = ApiHelper::makeRequest('POST', $url, $headers);
         
@@ -27,7 +30,7 @@ class RITSService
     public function accountEnquiry($payload)
     {
         $headers = ApiHelper::getHeaders($this->credentials);
-        $url = $this->credentials->baseUrl . Urls::$accountInquiry;
+        $url = $this->baseUrl . Urls::$accountInquiry;
         
         $data = [
             'accountNo' => $payload->getAccountNo(),
@@ -38,11 +41,25 @@ class RITSService
         
         return $result;
     }
-
+    
+    function getSinglePaymentStatus($payload)
+    {
+        $headers = ApiHelper::getHeaders($this->credentials);
+        $url = $this->baseUrl . Urls::$singlePaymentStatus;
+        
+        $data = [
+            'transRef' => $payload->encryptedTransRef()
+        ];
+        
+        $result = ApiHelper::makeRequest('POST', $url, $headers, $data);
+        
+        return $result;
+    }
+    
     public function makeSinglePayment($payload)
     {
         $headers = ApiHelper::getHeaders($this->credentials);
-        $url = $this->credentials->baseUrl . Urls::$singlePayment;
+        $url = $this->baseUrl . Urls::$singlePayment;
         
         $data = [
             'amount' => $payload->encryptedAmount(),
@@ -63,7 +80,7 @@ class RITSService
     public function makeBulkPayment($payload)
     {
         $headers = ApiHelper::getHeaders($this->credentials);
-        $url = $this->credentials->baseUrl . Urls::$bulkPayment;
+        $url = $this->baseUrl . Urls::$bulkPayment;
         
         $data = [
             'bulkPaymentInfo' => $payload->getEncryptedData(),
