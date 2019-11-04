@@ -1,5 +1,5 @@
 {
-    "name": "mojoblanco/rits-php",
+    "name": "mojoblanco/rits",
     "require": {
         "guzzlehttp/guzzle": "^6.3@dev"
     },
