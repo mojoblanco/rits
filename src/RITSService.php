@@ -42,18 +42,30 @@ class RITSService
         return $result;
     }
     
-    function getSinglePaymentStatus($payload)
+    public function getSinglePaymentStatus($payload)
     {
         $headers = ApiHelper::getHeaders($this->credentials);
         $url = $this->baseUrl . Urls::$singlePaymentStatus;
         
         $data = [
-            'transRef' => $payload->encryptedTransRef()
+            'transRef' => $payload->encryptedReference()
         ];
         
         $result = ApiHelper::makeRequest('POST', $url, $headers, $data);
         
         return $result;
+    }
+    
+    public function getBulkPaymentStatus($payload)
+    {
+        $headers = ApiHelper::getHeaders($this->credentials);
+        $url = $this->baseUrl . Urls::$bulkPaymentStatus;
+        
+        $data = [
+            'batchRef' => $payload->encryptedReference()
+        ];
+        
+        return ApiHelper::makeRequest('POST', $url, $headers, $data);
     }
     
     public function makeSinglePayment($payload)

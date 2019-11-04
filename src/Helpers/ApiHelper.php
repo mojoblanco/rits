@@ -40,6 +40,8 @@ class ApiHelper {
         
         $data = (string) $response->getBody();
         
+        var_dump($body);
+        
         return json_decode($data);
     }
 }

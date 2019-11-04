@@ -4,8 +4,8 @@ namespace Mojoblanco\RITS\Models;
 
 use Mojoblanco\RITS\Helpers\Encryptor;
 
-class SinglePaymentStatus {
-    public $transRef;
+class PaymentStatus {
+    public $reference;
     
     protected $iv;
     protected $key;
@@ -16,7 +16,7 @@ class SinglePaymentStatus {
         $this->key = $key;
     }
     
-    public function encryptedTransRef() {
-        return Encryptor::encrypt($this->transRef, $this->iv, $this->key);
+    public function encryptedReference() {
+        return Encryptor::encrypt($this->reference, $this->iv, $this->key);
     }
 }
