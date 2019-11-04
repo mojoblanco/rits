@@ -10,10 +10,11 @@
             "email": "mojoblanco@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "Mojoblanco\\RITS\\": "src/"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
