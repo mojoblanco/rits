@@ -14,7 +14,7 @@ class RITSService
     {
         $this->credentials = $credentials;
         
-        $this->baseUrl = Urls::getBaseUrl($credentials->env);
+        $this->baseUrl = Urls::getBaseUrl($credentials->environment);
     }
     
     public function getActiveBanks()
