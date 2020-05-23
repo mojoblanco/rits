@@ -16,6 +16,8 @@ class BulkBeneficiary {
     
     public $narration; 
     
+    public $transRef;
+    
     protected $iv;
     protected $key;
     
@@ -45,7 +47,7 @@ class BulkBeneficiary {
     }
     
     public function encryptedTransRef() {
-        return Encryptor::encrypt(rand(), $this->iv, $this->key);
+        return Encryptor::encrypt($this->transRef, $this->iv, $this->key);
     }
 
 
