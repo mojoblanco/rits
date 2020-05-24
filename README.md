@@ -14,7 +14,7 @@ Open your terminal or command prompt, go to the root directory of your Laravel p
 ## Usage
 
 ### Setup Credentials
-To use any of the available you need to set up your credentials first
+To use any of the available services, you need to set up your credentials first
 
 ```php
 use Mojoblanco\RITS\Models\Credential;
@@ -31,42 +31,48 @@ $credentials->environment = 'DEMO'; //Can either be LIVE or DEMO
 ### Available Services
 
 #### Bulk Payment
-1. Build the list of your beneficiaries
+```php
+use Mojoblanco\RITS\RITSService;
+use Mojoblanco\RITS\Models\BulkBeneficiary;
 
-    ```php
-    use Mojoblanco\RITS\Models\BulkBeneficiary;
+// Build the list of your beneficiaries
+$beneficiaries = [];
 
-    $beneficiaries = [];
+for ($i = 0; $i < 10; $i++) {
+    $bb = new BulkBeneficiary($iv, $key);
+    $bb->amount = 100;
+    $bb->accountNumber = '0582915208015';
+    $bb->bankCode = '058';
+    $bb->email = 'test@mail.com';
+    $bb->narration = 'Test payment';
+    $bb->transRef = rand(); // Make sure it is something you can track.
 
-    for ($i = 0; $i < 10; $i++) {
-        $bb = new BulkBeneficiary($iv, $key);
-        $bb->amount = 100;
-        $bb->accountNumber = '0582915208015;
-        $bb->bankCode = '058';
-        $bb->email = 'test@mail.com';
-        $bb->narration = 'Test payment';
-        $bb->transRef = rand(); //Make sure it is something you can track.
+    array_push($beneficiaries, $bb);
+}
 
-        array_push($beneficiaries, $bb);
-    }
-    ```
+// Call the bulk payment service
+$bp = new BulkPayment($iv, $key);
+$bp->batchRef = '12345678987654321';
+$bp->debitAccount = '1234565678'
+$bp->bankCode = '044'
+$bp->narration = 'Test bulk payment'
+$bp->beneficiaries = $beneficiaries;
 
-2. Call the bulk payment service
+$service = new RITSService($credentials);
+$response = $service->makeBulkPayment($bp);
+```
 
-    ```php
-    use Mojoblanco\RITS\RITSService;
+#### Bulk Payment Status
+```php
+use Mojoblanco\RITS\RITSService;
+use Mojoblanco\RITS\Models\PaymentStatus;
 
-    $bp = new BulkPayment($iv, $key);
-    $bp->batchRef = '12345678987654321;
-    $bp->debitAccount = '1234565678'
-    $bp->bankCode = '044'
-    $bp->narration = 'Test bulk payment'
-    $bp->beneficiaries = $beneficiaries;
+$ps = new PaymentStatus($iv, $key);
+$ps->reference = $reference;
 
-    $service = new RITSService($credentials);
-    $response = $service->makeBulkPayment($bp);
-    ```
-
+$service = new RITSService($credentials);
+$response = $service->getBulkPaymentStatus($ps);
+```
 
 ### How can you thank me?
 You can like this repo, follow me on [github](https://github.com/mojoblanco) and [twitter](https://twitter.com/themojoblanco)
