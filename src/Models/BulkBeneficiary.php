@@ -58,7 +58,7 @@ class BulkBeneficiary {
             'benficiaryAccountNumber' => $this->encryptedAccountNumber(),
             'benficiaryBankCode' => $this->encryptedBankCode(),
             'benficiaryEmail' => $this->encryptedEmail(),
-            'naration' => $this->encryptedNarration(),
+            'narration' => $this->encryptedNarration(),
             'transRef' => $this->encryptedTransRef(),
         ];
         
